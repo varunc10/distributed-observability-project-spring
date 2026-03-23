@@ -1,0 +1,38 @@
+server:
+  port: 8002
+
+spring:
+  application:
+    name: service2
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+  cloud:
+    openfeign:
+      micrometer:
+        enabled: true
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/tracing_spring
+
+#  cloud:
+#    stream:
+#      bindings:
+#        kafka-out:
+#          destination: topic1
+#        rabbit-out:
+#          destination: queue1
+
+management:
+  tracing:
+    service-name: service2
+    sampling:
+      probability: 1.0
+    propagation:
+      type: W3C
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces

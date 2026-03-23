@@ -1,0 +1,45 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: service1
+
+  cloud:
+    openfeign:
+      micrometer:
+        enabled: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tracing_spring
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASS}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # dev only (use validate in prod)
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+#  cloud:
+#    stream:
+#      bindings:
+#        kafka-out:
+#          destination: topic1
+#        rabbit-out:
+#          destination: queue1
+
+management:
+  tracing:
+    enabled: true
+    service-name: service1
+    sampling:
+      probability: 1.0
+    propagation:
+      type: W3C
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
