@@ -1,7 +1,8 @@
 filebeat.inputs:
   - type: log
+    enabled: true
     paths:
-      - /var/log/app/*.log
+      - /app/**/logs/*.log
     json.keys_under_root: true
     json.add_error_key: true
     json.ignore_decoding_error: true
