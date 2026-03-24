@@ -38,8 +38,11 @@ public class TracingController {
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest) {
         log.info("Received request to create order {}", orderRequest);
+
+        log.info("Fetching user {}", orderRequest.getUserId());
         Optional<User> optionalUser = userRepository.findById(orderRequest.getUserId());
         if (optionalUser.isEmpty()) {
+            log.warn("User {} not found", orderRequest.getUserId());
             return ResponseEntity.notFound().build();
         }
         User user = optionalUser.get();
@@ -50,6 +53,7 @@ public class TracingController {
         Order savedOrder = orderRepository.save(order);
         log.info("Created order {}", savedOrder);
         try {
+            log.info("Sending order to service3 {}", savedOrder);
             service3Client.createOrder(orderRequest);
         } catch (Exception e) {
             log.error("Exception occurred while creating order {}", e.getMessage(), e);
