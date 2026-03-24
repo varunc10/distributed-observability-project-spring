@@ -89,8 +89,9 @@ services:
 #    container_name: filebeat
 #    user: root
 #    volumes:
-#      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
-#      - /var/log/app:/var/log/app
+#      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+#      # Mount the root of your repo so Filebeat can access all sub-service logs
+#      - ./:/usr/share/filebeat/app:ro
 #    depends_on:
 #      - elasticsearch
 #
