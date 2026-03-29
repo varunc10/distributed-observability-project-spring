@@ -33,6 +33,18 @@ spring:
 #          destination: queue1
 
 management:
+  endpoints:
+    web:
+      exposure:
+        # Exposes /actuator/health and /actuator/prometheus
+        include: "health,prometheus"
+  metrics:
+    tags:
+      service: service1
+    distribution:
+      percentiles-histogram:
+        # Enables latency histograms for SLIs like "p99 response time"
+        http.server.requests: true
   tracing:
     enabled: true
     service-name: service1

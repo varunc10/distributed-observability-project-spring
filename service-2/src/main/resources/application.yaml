@@ -27,6 +27,16 @@ spring:
 #          destination: queue1
 
 management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  metrics:
+    tags:
+      service: service1
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
   tracing:
     service-name: service2
     sampling:
