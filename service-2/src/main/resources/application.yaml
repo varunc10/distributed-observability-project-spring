@@ -30,12 +30,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus
+        # Exposes /actuator/health and /actuator/prometheus
+        include: "health,prometheus"
   metrics:
     tags:
-      service: service1
+      service: service2
     distribution:
       percentiles-histogram:
+        # Enables latency histograms for SLIs like "p99 response time"
         http.server.requests: true
   tracing:
     service-name: service2
